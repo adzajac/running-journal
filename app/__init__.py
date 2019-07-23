@@ -5,7 +5,7 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 
 # blueprints
-from app.errors import error_bp
+from app.errors import blueprint as blueprint_errors
 from app.public import blueprint as blueprint_public
 
 
@@ -20,7 +20,7 @@ def create_app(config=Config):
     return app
 
 def register_blueprints(app):
-    app.register_blueprint(error_bp)
+    app.register_blueprint(blueprint_errors)
     app.register_blueprint(blueprint_public)
 
 def register_extensions(app):
