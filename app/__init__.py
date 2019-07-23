@@ -1,8 +1,11 @@
 import os
 from flask import Flask
+
+# extensions
 from flask_sqlalchemy import SQLAlchemy
 
-
+# blueprints
+from app.errors import error_bp
 
 
 
@@ -21,8 +24,12 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     
-def init(config=Config):
-    app = Flask(__name__)
+def create_app(config=Config):
+    app = Flask(__name__)       # __name__.split('.')[0]
     app.config.from_object(config)
-    db.init_app(app)
+    app.register_blueprint(error_bp)
+    register_extensions(app)
     return app
+
+def register_extensions(app):
+    db.init_app(app)

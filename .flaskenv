@@ -1,2 +1,2 @@
-FLASK_APP="app:init()"
+FLASK_APP="app:create_app()"
 FLASK_ENV=development
