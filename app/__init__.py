@@ -1,5 +1,6 @@
-import os
+
 from flask import Flask
+from config import Config
 
 # extensions
 from flask_sqlalchemy import SQLAlchemy
@@ -8,20 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from app.errors import error_bp
 
 
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'app.db')
-SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-
 db = SQLAlchemy()
-
-
-class Config(object):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'app.db')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     
 def create_app(config=Config):
