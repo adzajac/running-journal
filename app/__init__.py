@@ -3,6 +3,7 @@ from config import Config
 
 # extensions
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 # blueprints
 from app.errors import blueprint as blueprint_errors
@@ -10,6 +11,7 @@ from app.public import blueprint as blueprint_public
 
 
 db = SQLAlchemy()
+login = LoginManager()
 
     
 def create_app(config=Config):
@@ -25,3 +27,4 @@ def register_blueprints(app):
 
 def register_extensions(app):
     db.init_app(app)
+    login.init_app(app)
