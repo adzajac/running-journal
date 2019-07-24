@@ -1,18 +1,48 @@
 from flask import render_template
 from app.public import blueprint
-
-
-
+from app.public.forms import LoginForm, RegisterForm
 
 
 @blueprint.route('/')
 def home():
     return render_template('public/index.html')
 
-@blueprint.route('/login')
+@blueprint.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('public/login.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        return "done"
+    return render_template('public/login.html', form=form)
     
-@blueprint.route('/register')
+    
+@blueprint.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('public/register.html')
+    form = RegisterForm()
+    if form.validate_on_submit():
+        return "done"
+    return render_template('public/register.html', form=form)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
