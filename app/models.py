@@ -36,6 +36,7 @@ class User(UserMixin, db.Model):
       
     def check_password(self, password):
         return check_password_hash(self.password, password+self.salt)
+    
         
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key=True)
