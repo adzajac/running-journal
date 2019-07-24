@@ -1,7 +1,7 @@
 from flask import render_template
 from app.public import blueprint
 from app.public.forms import LoginForm, RegisterForm
-
+from app import db
 
 @blueprint.route('/')
 def home():

@@ -2,16 +2,12 @@ from flask import Flask
 from config import Config
 
 # extensions
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from app.extensions import db, login
 
 # blueprints
 from app.errors import blueprint as blueprint_errors
 from app.public import blueprint as blueprint_public
 
-
-db = SQLAlchemy()
-login = LoginManager()
 
     
 def create_app(config=Config):
