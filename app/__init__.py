@@ -8,6 +8,7 @@ from app.database import init_database
 # blueprints
 from app.errors import blueprint as blueprint_errors
 from app.public import blueprint as blueprint_public
+from app.main import blueprint as blueprint_main
 
 
     
@@ -23,4 +24,5 @@ def create_app(config=Config):
 def register_blueprints(app):
     app.register_blueprint(blueprint_errors)
     app.register_blueprint(blueprint_public)
+    app.register_blueprint(blueprint_main)
 

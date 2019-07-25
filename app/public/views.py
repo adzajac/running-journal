@@ -1,5 +1,5 @@
 from flask import render_template, redirect, flash, url_for
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 from app.public import blueprint
 from app.public.forms import LoginForm, RegisterForm
 from app.extensions import db, login
@@ -12,7 +12,9 @@ def load_user(id):
 
 
 @blueprint.route('/')
-def home():
+def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
     return render_template('public/index.html')
 
 
@@ -25,14 +27,14 @@ def login():
             if user.check_password(form.password.data):
                 login_user(user)
                 flash("you're now logged in")
-                return redirect(url_for('public.home'))
+                return redirect(url_for('public.index'))
     return render_template('public/login.html', form=form)
     
 @blueprint.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('public.home'))
+    return redirect(url_for('public.index'))
     
 @blueprint.route('/register', methods=['GET', 'POST'])
 def register():
