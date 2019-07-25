@@ -1,8 +1,9 @@
 from datetime import datetime
 from random import random, choice
-from app import db
+from app.extensions import db
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+
 
 follower = db.Table(
     'follower',
@@ -44,7 +45,6 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     # relationships
     likes = db.relationship('Like', backref='post', lazy='dynamic')
-    
     
 
 class Run(db.Model):

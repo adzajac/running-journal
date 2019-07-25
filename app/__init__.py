@@ -3,6 +3,7 @@ from config import Config
 
 # extensions (import before blueprints!)
 from app.extensions import db, login, register_extensions
+from app.database import init_database
 
 # blueprints
 from app.errors import blueprint as blueprint_errors
@@ -15,6 +16,7 @@ def create_app(config=Config):
     app.config.from_object(config)
     register_blueprints(app)
     register_extensions(app)
+    init_database(app)
     return app
 
 
