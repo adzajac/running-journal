@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, redirect, flash, url_for
 from flask_login import login_user
 from app.public import blueprint
 from app.public.forms import LoginForm, RegisterForm
@@ -24,7 +24,8 @@ def login():
         if user is not None:
             if user.check_password(form.password.data):
                 login_user(user)
-                return "you're now logged in"
+                flash("you're now logged in")
+                return redirect(url_for('public.home'))
     return render_template('public/login.html', form=form)
     
     
@@ -36,5 +37,6 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        return "user registered"
+        flash("you're now registered, please log in")
+        return redirect(url_for('public.login'))
     return render_template('public/register.html', form=form)
