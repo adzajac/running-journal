@@ -26,12 +26,10 @@ class User(UserMixin, db.Model):
         primaryjoin=(follower.c.user_id == user_id),
         secondaryjoin=(follower.c.followed_id == user_id),
         backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
-    
-    def __init__(self, **kwargs):
+
+    def set_password(self, password):
         abc = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
         self.salt = ''.join([choice(abc) for _ in range(10)])
-    
-    def set_password(self, password):
         self.password = generate_password_hash(password+self.salt)
       
     def check_password(self, password):
