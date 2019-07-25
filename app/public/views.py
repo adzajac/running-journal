@@ -1,8 +1,14 @@
 from flask import render_template
+from flask_login import login_user
 from app.public import blueprint
 from app.public.forms import LoginForm, RegisterForm
-from app.extensions import db
+from app.extensions import db, login
 from app.models import User
+
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 
 @blueprint.route('/')
@@ -14,7 +20,11 @@ def home():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        return "done"
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is not None:
+            if user.check_password(form.password.data):
+                login_user(user)
+                return "you're now logged in"
     return render_template('public/login.html', form=form)
     
     
