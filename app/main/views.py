@@ -15,6 +15,11 @@ def index():
 
 @blueprint.route('/profile')
 @login_required
+def profile():
+    return 'user profile page'
+
+@blueprint.route('/edit_profile')
+@login_required
 def edit_profile():
     return 'edit user profile page'
     
@@ -30,7 +35,7 @@ def user(username):
 def add_run():
     return 'adding a run'
 
-@blueprint.rounte('/add_post')
+@blueprint.route('/add_post')
 @login_required
 def add_post():
     return 'adding a post'
