@@ -8,38 +8,34 @@ from app.models import User
 
 
 @blueprint.route('/main')
+@login_required
 def index():
     return render_template('main/index.html')
 
 
-#@blueprint.route('/login', methods=['GET', 'POST'])
-#def login():
-#    form = LoginForm()
-#    if form.validate_on_submit():
-#        user = User.query.filter_by(username=form.username.data).first()
-#        if user is not None:
-#            if user.check_password(form.password.data):
-#                login_user(user)
-#                flash("you're now logged in")
-#                return redirect(url_for('public.home'))
-#    return render_template('public/login.html', form=form)
-#    
-#    
-#@blueprint.route('/logout')
-#@login_required
-#def logout():
-#    logout_user()
-#    return redirect(url_for('public.home'))
-#    
-#    
-#@blueprint.route('/register', methods=['GET', 'POST'])
-#def register():
-#    form = RegisterForm()
-#    if form.validate_on_submit():
-#        user = User(username=form.username.data, email=form.email.data)
-#        user.set_password(form.password.data)
-#        db.session.add(user)
-#        db.session.commit()
-#        flash("you're now registered, please log in")
-#        return redirect(url_for('public.login'))
-#    return render_template('public/register.html', form=form)
+@blueprint.route('/profile')
+@login_required
+def edit_profile():
+    return 'edit user profile page'
+    
+    
+@blueprint.route('/user/<username>')
+@login_required
+def user(username):
+    return 'view profile page of: ' + username
+
+
+@blueprint.route('/add_run')
+@login_required
+def add_run():
+    return 'adding a run'
+
+@blueprint.rounte('/add_post')
+@login_required
+def add_post():
+    return 'adding a post'
+
+@blueprint.route('/add_injury')
+@login_required
+def add_injury():
+    return 'adding an injury'
