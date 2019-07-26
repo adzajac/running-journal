@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, DecimalField, DateTimeField
+from wtforms import StringField, PasswordField, SubmitField, DecimalField, DateTimeField, TextAreaField 
 from wtforms.validators import DataRequired, Email, EqualTo, Length, NumberRange
 
 
@@ -14,8 +14,8 @@ class AddRunForm(FlaskForm):
 
     
 class AddInjuryForm(FlaskForm):
-    distance = DecimalField('Distance', validators=[DataRequired()])
-    time = DecimalField('Time', validators=[DataRequired()])
-    timestamp = DateTimeField('Injury Date/Time')
+    title = StringField('Injury type', validators=[DataRequired()])
+    description = TextAreaField('Description [optional]')
+    timestamp = DateTimeField('Injury Date', format='%d/%m/%Y')
     submit = SubmitField('Submit')
     
