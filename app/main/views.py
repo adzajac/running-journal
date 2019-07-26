@@ -11,7 +11,8 @@ from app.models import User, Run, Injury
 @blueprint.route('/main')
 @login_required
 def index():
-    return render_template('main/index.html')
+    runs = current_user.runs.all()
+    return render_template('main/index.html', runs=runs)
 
 
 @blueprint.route('/profile')

@@ -7,5 +7,19 @@
     <a href="{{ url_for('.add_run') }}" class="btn btn-success">Add new run!</a>
     <a href="{{ url_for('.add_injury') }}" class="btn btn-warning">Add an injury.</a>
 </div>
+
+
+<div class="mt-5">
+    {% if runs %}
+        Your runs: <br><br>
+        {% for run in runs %}  
+            <p>
+            {{ run.distances }} km
+            {{ run.times }} sec <br>
+            {{ run.timestamp }} 
+            </p>
+        {% endfor %}
+    {% endif %}
+</div>
     
 {% endblock %}
