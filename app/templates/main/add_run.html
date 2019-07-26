@@ -25,7 +25,6 @@
             {% endfor %}
            
         
-            {{ form.hidden_tag() }}
             <p>
                 {{ form.duration_h.label }} <br>
                  
@@ -47,8 +46,6 @@
             <div class="alert alert-danger form-alert">{{ error }}</div>
             {% endfor %}
         
-        
-            {{ form.hidden_tag() }}
             <p>
                 {{ form.timestamp.label }} <br>
                 <input id="timestamp" name="timestamp" type="text" value="" size="14"> 
