@@ -1,5 +1,16 @@
 {% extends 'base.html' %}
 
+{% block style %}
+<style>
+    .run {
+        width:300px;
+        background-color:#efedeb;
+        padding:8px;
+        padding-left:20px;
+        margin-bottom:4px;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
 
@@ -11,13 +22,13 @@
 
 <div class="mt-5">
     {% if runs %}
-        Your runs: <br><br>
+    <h5>Your last runs:</h5>
         {% for run in runs %}  
-            <p>
-            {{ run.distances }} km
+            <div class="run">
+            {{ run.distances }} km in
             {{ run.times }} sec <br>
             {{ run.timestamp }} 
-            </p>
+            </div>
         {% endfor %}
     {% endif %}
 </div>
