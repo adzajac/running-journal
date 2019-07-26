@@ -1,9 +1,10 @@
+from datetime import datetime
 from flask import render_template, redirect, flash, url_for
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 from app.main import blueprint
 from app.main.forms import AddRunForm, AddInjuryForm
 from app.extensions import db, login
-from app.models import User
+from app.models import User, Run, Injury
 
 
 
@@ -36,6 +37,11 @@ def user(username):
 def add_run():
     form = AddRunForm()
     if form.validate_on_submit():
+        duration = int(form.duration_h.data)*360 + int(form.duration_m.data)*60 + int(form.duration_s.data)
+        timestamp = form.timestamp.data
+        run = Run(user_id=current_user.id, distances=int(form.distance.data), times=str(duration), timestamp=timestamp)
+        db.session.add(run)
+        db.session.commit()
         return 'ok'
     return render_template('main/add_run.html', form=form)
 
