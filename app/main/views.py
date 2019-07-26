@@ -1,7 +1,7 @@
 from flask import render_template, redirect, flash, url_for
 from flask_login import login_required, login_user, logout_user
 from app.main import blueprint
-#from app.main.forms import 
+from app.main.forms import AddRunForm, AddInjuryForm
 from app.extensions import db, login
 from app.models import User
 
@@ -18,6 +18,7 @@ def index():
 def profile():
     return 'user profile page'
 
+
 @blueprint.route('/edit_profile')
 @login_required
 def edit_profile():
@@ -30,17 +31,25 @@ def user(username):
     return 'view profile page of: ' + username
 
 
-@blueprint.route('/add_run')
+@blueprint.route('/add_run', methods=['POST', 'GET'])
 @login_required
 def add_run():
-    return 'adding a run'
+    form = AddRunForm()
+    if form.validate_on_submit():
+        return 'ok'
+    return render_template('main/add_run.html', form=form)
 
-@blueprint.route('/add_post')
+
+@blueprint.route('/add_post', methods=['POST', 'GET'])
 @login_required
 def add_post():
     return 'adding a post'
 
-@blueprint.route('/add_injury')
+
+@blueprint.route('/add_injury', methods=['POST', 'GET'])
 @login_required
 def add_injury():
-    return 'adding an injury'
+    form = AddInjuryForm()
+    if form.validate_on_submit():
+        return 'ok'
+    return render_template('main/add_injury.html', form=form)

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+
+{% block style %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <p>Add a Run</p>
+
+    <form acction="" method="post" class="login-form" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.distance.label }} <br> 
+                <input id="distance" name="distance" required type="text" value="" placeholder="0.00" size="14">
+            </p>
+            
+            {% for error in form.distance.errors %}
+            <div class="alert alert-danger form-alert">
+                {{ error }}
+            </div>
+            {% endfor %}
+           
+        
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.duration_h.label }} <br>
+                 
+                <input id="duration_h" name="duration_h" required type="text" value="00" size="2" maxlength="2">
+                :
+                <input id="duration_m" name="duration_m" required type="text" value="00" size="2" maxlength="2">
+                :
+                <input id="duration_s" name="duration_s" required type="text" value="00" size="2" maxlength="2">
+            </p>
+        
+        
+            {% for error in form.duration_h.errors %}
+            <div class="alert alert-danger form-alert">{{ error }}</div>
+            {% endfor %}
+            {% for error in form.duration_m.errors %}
+            <div class="alert alert-danger form-alert">{{ error }}</div>
+            {% endfor %}
+            {% for error in form.duration_s.errors %}
+            <div class="alert alert-danger form-alert">{{ error }}</div>
+            {% endfor %}
+        
+        
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.timestamp.label }} <br>
+                <input id="timestamp" name="timestamp" type="text" value="" size="14"> 
+            </p>
+            
+            {% for error in form.timestamp.errors %}
+            <div class="alert alert-danger form-alert">
+                {{ error }}
+            </div>
+            {% endfor %}
+            
+            
+            <p class="mt-5">
+                <input id="submit" name="submit" type="submit" value="Submit" class='btn btn-primary'>
+            </p>
+        
+        </form>  
+
+
+{% endblock %}
+
+
+{% block js %}
+<script>
+    $(document).ready( function() {
+        var now = new Date();    
+        var year = now.getFullYear();
+        var month = (now.getMonth() + 1);               
+        var day = now.getDate();
+        if (month < 10) 
+            month = "0" + month;
+        if (day < 10) 
+            day = "0" + day;
+        var today = day + '/' + month + '/' + year;
+        $('#timestamp').val(today);
+    });
+ </script>
+{% endblock %}
