@@ -3,6 +3,9 @@
 
 {% block content %}
 
-    Welcome {{ current_user.username }}!
-
+<div class="">
+    <a href="{{ url_for('.add_run') }}" class="btn btn-success">Add new run!</a>
+    <a href="{{ url_for('.add_injury') }}" class="btn btn-warning">Add an injury.</a>
+</div>
+    
 {% endblock %}
