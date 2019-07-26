@@ -20,6 +20,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(128), index=True, unique=True)
     # relationships
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    injuries = db.relationship('Injury', backref='author', lazy='dynamic')
     likes = db.relationship('Like', backref='author', lazy='dynamic')
     runs = db.relationship('Run', backref='author', lazy='dynamic')
     followed = db.relationship(
@@ -45,6 +46,14 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     # relationships
     likes = db.relationship('Like', backref='post', lazy='dynamic')
+    
+    
+class Injury(db.Model):
+    injury_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    text = db.Column(db.String(40))
+    description = db.Column(db.String(512))
+    timestamp = db.Column(db.DateTime, index=True)
     
 
 class Run(db.Model):
