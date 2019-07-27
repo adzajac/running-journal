@@ -43,7 +43,8 @@ def add_run():
         run = Run(user_id=current_user.id, distances=int(form.distance.data), times=str(duration), timestamp=timestamp)
         db.session.add(run)
         db.session.commit()
-        return 'ok'
+        flash("run added")
+        return redirect(url_for('main.index'))
     return render_template('main/add_run.html', form=form)
 
 
@@ -58,5 +59,9 @@ def add_post():
 def add_injury():
     form = AddInjuryForm()
     if form.validate_on_submit():
-        return 'ok'
+        injury = Injury(user_id=current_user.id, text=form.title.data, description=form.description.data, timestamp=form.timestamp.data)
+        db.session.add(injury)
+        db.session.commit()
+        flash("injury added")
+        return redirect(url_for('main.index'))
     return render_template('main/add_injury.html', form=form)
