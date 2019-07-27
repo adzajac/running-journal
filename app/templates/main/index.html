@@ -2,12 +2,15 @@
 
 {% block style %}
 <style>
-    .run {
+    .run, .injury {
         width:300px;
-        background-color:#efedeb;
+        background-color:#d6efd0;
         padding:8px;
         padding-left:20px;
         margin-bottom:4px;
+    }
+    .injury {
+        background-color:#ffdddd;
     }
 </style>
 {% endblock %}
@@ -19,8 +22,9 @@
     <a href="{{ url_for('.add_injury') }}" class="btn btn-warning">Add an injury.</a>
 </div>
 
-
-<div class="mt-5">
+<div class="container">
+    <div class="row">
+<div class="col mt-5">
     {% if runs %}
     <h5>Your last runs:</h5>
         {% for run in runs %}  
@@ -32,5 +36,18 @@
         {% endfor %}
     {% endif %}
 </div>
-    
+<div class="col mt-5">
+    {% if injuries %}
+    <h5>Your injuries:</h5>
+        {% for injury in injuries %}  
+            <div class="injury">
+            {{ injury.text }} <br>
+            {{ injury.description }} <br> 
+            {{ injury.timestamp }} 
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>    
+        </div>
+    </div>
 {% endblock %}
