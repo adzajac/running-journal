@@ -11,8 +11,8 @@ from app.models import User, Run, Injury
 @blueprint.route('/main')
 @login_required
 def index():
-    runs = current_user.runs.all()
-    injuries = current_user.injuries.all()
+    runs = current_user.runs.order_by(Run.timestamp.desc()).all()
+    injuries = current_user.injuries.order_by(Injury.timestamp.desc()).all()
     return render_template('main/index.html', runs=runs, injuries=injuries)
 
 

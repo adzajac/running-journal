@@ -1,53 +1,58 @@
 {% extends 'base.html' %}
-
-{% block style %}
-<style>
-    .run, .injury {
-        width:300px;
-        background-color:#d6efd0;
-        padding:8px;
-        padding-left:20px;
-        margin-bottom:4px;
-    }
-    .injury {
-        background-color:#ffdddd;
-    }
-</style>
-{% endblock %}
-
 {% block content %}
-
 <div class="">
-    <a href="{{ url_for('.add_run') }}" class="btn btn-success">Add new run!</a>
-    <a href="{{ url_for('.add_injury') }}" class="btn btn-warning">Add an injury.</a>
+    <a href="{{ url_for('.add_run') }}" class="btn btn-success">Add a new run!</a>
+    <a href="{{ url_for('.add_injury') }}" class="btn btn-secondary">Add an injury.</a>
 </div>
-
 <div class="container">
-    <div class="row">
-<div class="col mt-5">
-    {% if runs %}
-    <h5>Your last runs:</h5>
-        {% for run in runs %}  
-            <div class="run">
-            {{ run.distances }} km in
-            {{ run.times }} sec <br>
-            {{ run.timestamp }} 
-            </div>
-        {% endfor %}
-    {% endif %}
-</div>
-<div class="col mt-5">
-    {% if injuries %}
-    <h5>Your injuries:</h5>
-        {% for injury in injuries %}  
-            <div class="injury">
-            {{ injury.text }} <br>
-            {{ injury.description }} <br> 
-            {{ injury.timestamp }} 
-            </div>
-        {% endfor %}
-    {% endif %}
-</div>    
-        </div>
+    <div class="row mt-5">
+        <canvas id="myChart" width="400" height="400"></canvas>
     </div>
+    <div class="row">
+        <div class="col mt-5">
+        {% if runs %}
+        <h5>Your best runs:</h5>
+            {% for run in runs|sort(attribute='distances',reverse=False) %}  
+                {% set h=run.times|int//3600 %}
+                {% set m=run.times|int//60 %}
+                {% set s=run.times|int//60 %}
+                <div class="run">
+                {{ run.distances|int/1000 }} km in
+                {{ h|abs }}h {{ m|abs }}m {{ s|abs }}s <br>
+                {{ run.timestamp|string|truncate(13, end='') }} 
+                </div>
+            {% endfor %}
+        {% endif %} 
+        </div>
+        <div class="col mt-5">
+        {% if injuries %}
+        <h5>Your latest injuries:</h5>
+            {% for injury in injuries %}  
+                <div class="injury">
+                {{ injury.text }} <br>
+                {{ injury.description }} <br> 
+                {{ injury.timestamp }} 
+                </div>
+            {% endfor %}
+        {% endif %}
+        </div>    
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+    var data_from_db;   
+    {% if runs %}
+    data_from_db = [
+        {% for run in runs %} 
+        {t:'{{run.timestamp}}', y:{{run.distances}}},
+        {% endfor %}
+    ];
+    {% endif %}
+</script>
+<script src="{{ url_for('static', filename='vendors/moment.js') }}"></script>
+<script src="{{ url_for('static', filename='vendors/Chart.min.js') }}"></script>  
+<script src="{{ url_for('static', filename='utils.js') }}"></script>  
+
+<script src="{{ url_for('static', filename='run_chart.js') }}"></script>  
 {% endblock %}
