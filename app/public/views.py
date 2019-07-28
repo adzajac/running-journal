@@ -26,7 +26,6 @@ def login():
         if user is not None:
             if user.check_password(form.password.data):
                 login_user(user)
-                flash("you're now logged in")
                 return redirect(url_for('public.index'))
     return render_template('public/login.html', form=form)
     
