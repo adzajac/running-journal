@@ -5,13 +5,15 @@
     <a href="{{ url_for('.add_injury') }}" class="btn btn-secondary">Add an injury.</a>
 </div>
 <div class="container">
+    
     <div class="row mt-5">
+        <h5 class="mb-5">Your recent activity:</h5>
         <canvas id="myChart" width="400" height="400"></canvas>
     </div>
     <div class="row">
         <div class="col mt-5">
         {% if runs %}
-        <h5>Your best runs:</h5>
+        <h5 class="mb-4">Your best runs:</h5>
             {% for run in runs|sort(attribute='distances',reverse=False) %}  
                 {% set h=run.times|int//3600 %}
                 {% set m=run.times|int//60 %}
@@ -26,12 +28,12 @@
         </div>
         <div class="col mt-5">
         {% if injuries %}
-        <h5>Your latest injuries:</h5>
+        <h5 class="mb-4">Your latest injuries:</h5>
             {% for injury in injuries %}  
                 <div class="injury">
                 {{ injury.text }} <br>
                 {{ injury.description }} <br> 
-                {{ injury.timestamp }} 
+                {{ injury.timestamp|string|truncate(13, end='') }} 
                 </div>
             {% endfor %}
         {% endif %}
