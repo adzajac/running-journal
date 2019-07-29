@@ -59,7 +59,7 @@ var cfg = {
             yAxes: [{
                 scaleLabel: {
                     display: true,
-                    labelString: 'Distance [m]'
+                    labelString: 'Distance [km]'
                 },
                 ticks: {
                     suggestedMin: 0

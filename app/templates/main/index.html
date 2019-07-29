@@ -47,7 +47,7 @@
     {% if runs %}
     data_from_db = [
         {% for run in runs %} 
-        {t:'{{run.timestamp}}', y:{{run.distances}}},
+        {t:'{{run.timestamp}}', y:{{run.distances|int/1000}}},
         {% endfor %}
     ];
     {% endif %}
