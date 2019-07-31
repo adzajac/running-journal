@@ -33,6 +33,21 @@ class UserModelCase(unittest.TestCase):
             self.assertEqual(get_user.username, u.username)
             self.assertEqual(get_user.email, u.email)
             
+    def test_add_run(self):
+        with self.app.app_context():
+            u = User(username="john", email="john@examaple.com")
+            db.session.add(u)
+            db.session.commit()
+            run_1 = Run(user_id=u.id, distances="1000", times="600")
+            run_2 = Run(user_id=u.id, distances="2000", times="1200")
+            run_3 = Run(user_id=u.id, distances="3000", times="1800")
+            db.session.add(run_1)
+            db.session.add(run_2)
+            db.session.add(run_3)
+            db.session.commit()
+            self.assertEqual(len(u.runs.all()),3)
+            self.assertEqual(u.runs.first().distances,"1000")
+            self.assertEqual(u.runs.first().times,"600")
             
            
     @classmethod
