@@ -1,5 +1,5 @@
 from app import create_app, db
-from app.models import User, Run
+from app.models import User, Run, Injury
 from config import Config
 import unittest
 
@@ -48,6 +48,21 @@ class UserModelCase(unittest.TestCase):
             self.assertEqual(len(u.runs.all()),3)
             self.assertEqual(u.runs.first().distances,"1000")
             self.assertEqual(u.runs.first().times,"600")
+            
+            
+    def test_add_injury(self):
+        with self.app.app_context():
+            u = User(username="max", email="max@examaple.com")
+            db.session.add(u)
+            db.session.commit()
+            injury_1 = Injury(user_id=u.id, text="injury 1", description="description 1")
+            injury_2 = Injury(user_id=u.id, text="injury 2", description="description 2")
+            db.session.add(injury_1)
+            db.session.add(injury_2)
+            db.session.commit()
+            self.assertEqual(len(u.injuries.all()),2)
+            self.assertEqual(u.injuries.first().text,"injury 1")
+            self.assertEqual(u.injuries.first().description,"description 1")
             
            
     @classmethod
