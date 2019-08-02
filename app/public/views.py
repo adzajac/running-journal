@@ -15,7 +15,8 @@ def load_user(id):
 def index():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
-    return render_template('public/index.html')
+    form = LoginForm()
+    return render_template('public/index.html', form=form)
 
 
 @blueprint.route('/login', methods=['GET', 'POST'])
