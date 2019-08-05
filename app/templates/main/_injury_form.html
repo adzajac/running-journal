@@ -1,0 +1,28 @@
+<form acction="" method="post" class="login-form" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.title.label }} <br> 
+        <input id="title" name="title" required type="text" value="">
+    </p>
+    {% for error in form.title.errors %}
+    <div class="alert alert-danger form-alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    <p>
+        {{ form.description.label }} <br> 
+        <textarea class="form-control rounded-0" id="description" name="description" rows="3"></textarea>
+    </p>
+    <p>
+        {{ form.timestamp.label }} <br>
+        <input id="timestamp" name="timestamp" type="text" value="" size="14"> 
+    </p>
+    {% for error in form.timestamp.errors %}
+    <div class="alert alert-danger form-alert">
+        {{ error }}
+    </div>
+    {% endfor %}
+    <p class="mt-5">
+        <input id="submit" name="submit" type="submit" value="Submit" class='btn btn-primary'>
+    </p>
+</form>  
