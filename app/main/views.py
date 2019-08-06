@@ -11,8 +11,8 @@ from app.models import User, Run, Injury
 @blueprint.route('/main')
 @login_required
 def index():
-    runs = current_user.runs.order_by(Run.timestamp.desc()).all()
-    injuries = current_user.injuries.order_by(Injury.timestamp.desc()).all()
+    runs = current_user.runs.order_by(Run.timestamp.desc()).limit(60).all()
+    injuries = current_user.injuries.order_by(Injury.timestamp.desc()).limit(60).all()
     return render_template('main/index.html', runs=runs, injuries=injuries)
 
 
@@ -73,6 +73,7 @@ def add_injury():
         flash("injury added")
         return redirect(url_for('main.index'))
     return render_template('main/add_injury.html', form=form)
+
 
 @blueprint.route('/injuries')
 @login_required
