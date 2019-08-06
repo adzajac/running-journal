@@ -49,6 +49,13 @@ def add_run():
     return render_template('main/add_run.html', form=form)
 
 
+@blueprint.route('/runs')
+@login_required
+def runs():
+    runs = current_user.runs.order_by(Run.timestamp.desc()).all()
+    return render_template('main/runs.html', runs=runs)
+
+
 @blueprint.route('/add_post', methods=['POST', 'GET'])
 @login_required
 def add_post():
