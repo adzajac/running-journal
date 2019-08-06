@@ -49,6 +49,18 @@ def add_run():
     return render_template('main/add_run.html', form=form)
 
 
+@blueprint.route('/edit_run/<run_id>')
+@login_required
+def edit_run(run_id):
+    return 'editing run: ' + run_id
+
+
+@blueprint.route('/delete_run/<run_id>')
+@login_required
+def delete_run(run_id):
+    return 'deleting run: ' + run_id
+
+
 @blueprint.route('/runs')
 @login_required
 def runs():
@@ -73,6 +85,18 @@ def add_injury():
         flash("injury added")
         return redirect(url_for('main.index'))
     return render_template('main/add_injury.html', form=form)
+
+
+@blueprint.route('/edit_injury/<injury_id>')
+@login_required
+def edit_injury(injury_id):
+    return 'editing injury: ' + injury_id
+
+
+@blueprint.route('/delete_injury/<injury_id>')
+@login_required
+def delete_injury(injury_id):
+    return 'deleting injury: ' + injury_id
 
 
 @blueprint.route('/injuries')
