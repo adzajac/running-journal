@@ -1,14 +1,25 @@
+var NUM_DAYS_DISPLAYED = 60;
+var run_data = []
+var injury_data = []
+var now = moment();
 
-
-//
-//var dateFormat = 'MMMM DD YYYY';
-//var date = moment(new Date(), dateFormat).subtract(30, 'd');
-//console.log(date.valueOf())
-//
-
-
-
-
+for(i=0; i<NUM_DAYS_DISPLAYED; i++) {
+    var date = now.subtract(1,'d').format("YYYY-MM-DD");
+    index = from_db_runs.date.findIndex(x => x.slice(0,-9) === date);
+    if(index>=0) {
+        run_data.push({t:date, y:from_db_runs.distance[index]});
+    }
+    else {
+        run_data.push({t:date, y:null});
+    }
+    index = from_db_injuries.date.findIndex(x => x.slice(0,-9) === date);
+    if(index>=0) {
+        injury_data.push({t:date, y:0});
+    }
+    else {
+        injury_data.push({t:date, y:null});
+    }
+}
 
 var ctx = document.getElementById('myChart').getContext('2d');
 ctx.canvas.width = 1000;
@@ -19,38 +30,50 @@ var cfg = {
     type: 'bar',
     data: {
         datasets: [{
-            label: 'Distances [m]',
+            label: 'Runs',
             backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
             borderColor: window.chartColors.green,
-            data: data_from_db,
+            data: run_data,
             type: 'bar',
             pointRadius: 0,
             fill: false,
             lineTension: 0,
-            borderWidth: 2
-        }]
+            borderWidth: 2,
+            spanGaps: true
+        },
+           {
+            label: 'Injuries',
+            backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.red,
+            data: injury_data,
+            type: 'bubble',
+            pointRadius: 0,
+            radius:10,
+            fill: false,
+            lineTension: 0,
+            borderWidth: 2,
+            spanGaps: true
+        }      
+                  
+      ]
     },
     options: {
         legend: {
-            display: false
+            display: true
+        },
+        animation: {
+            duration: 0
         },
         scales: {
             xAxes: [{
                 type: 'time',
                 time:{
-                    displayFormats:{
-                       'millisecond': 'DD MMM',
-                       'second': 'DD MMM',
-                       'minute': 'DD MMM',
-                       'hour': 'DD MMM',
-                       'day': 'DD MMM',
-                       'week': 'DD MMM',
-                       'month': 'DD MMM',
-                       'quarter': 'DD MMM',
-                       'year': 'DD MMM'
+                    unit:'day',
+                    displayFormats: {
+                        day: 'DD MMM'
                     }
                 },
-                distribution: 'series',
+                distribution: 'linear',
                 ticks: {
                     source: 'data',
                     autoSkip: true
