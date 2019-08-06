@@ -66,3 +66,10 @@ def add_injury():
         flash("injury added")
         return redirect(url_for('main.index'))
     return render_template('main/add_injury.html', form=form)
+
+@blueprint.route('/injuries')
+@login_required
+def injuries():
+    injuries = current_user.injuries.order_by(Injury.timestamp.desc()).all()
+    return render_template('main/injuries.html', injuries=injuries)
+    

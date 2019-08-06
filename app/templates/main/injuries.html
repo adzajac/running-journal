@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="">
+    <a href="{{ url_for('.add_injury') }}" class="btn btn-secondary">Add new injury</a>
+</div>
+<div class="container">
+    <div class="row">
+        
+        <div class="col mt-5">
+        {% if injuries %}
+        <h5 class="mb-4">Your injuries:</h5>
+            {% for injury in injuries %}  
+                <div class="injury">
+                {{ injury.text }} <br>
+                {{ injury.description }} <br> 
+                {{ injury.timestamp|string|truncate(13, end='') }} 
+                </div>
+            {% endfor %}
+        {% endif %}
+        </div>   
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{% endblock %}
