@@ -1,16 +1,6 @@
 {% extends 'base.html' %}
-
-
-{% block style %}
-<style>
-
-</style>
-{% endblock %}
-
 {% block content %}
-
     <p>Add a Run</p>
-
     <form acction="" method="post" class="login-form" novalidate>
             {{ form.hidden_tag() }}
             <p>
@@ -22,9 +12,7 @@
             <div class="alert alert-danger form-alert">
                 {{ error }}
             </div>
-            {% endfor %}
-           
-        
+            {% endfor %} 
             <p>
                 {{ form.duration_h.label }} <br>
                  
@@ -34,8 +22,6 @@
                 :
                 <input id="duration_s" name="duration_s" required type="text" value="00" size="2" maxlength="2">
             </p>
-        
-        
             {% for error in form.duration_h.errors %}
             <div class="alert alert-danger form-alert">{{ error }}</div>
             {% endfor %}
@@ -45,28 +31,20 @@
             {% for error in form.duration_s.errors %}
             <div class="alert alert-danger form-alert">{{ error }}</div>
             {% endfor %}
-        
             <p>
                 {{ form.timestamp.label }} <br>
                 <input id="timestamp" name="timestamp" type="text" value="" size="14"> 
             </p>
-            
             {% for error in form.timestamp.errors %}
             <div class="alert alert-danger form-alert">
                 {{ error }}
             </div>
             {% endfor %}
-            
-            
             <p class="mt-5">
                 <input id="submit" name="submit" type="submit" value="Submit" class='btn btn-primary'>
             </p>
-        
         </form>  
-
-
 {% endblock %}
-
 
 {% block js %}
 <script>

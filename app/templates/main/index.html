@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
 <div class="container">
-    
     <div class="row mt-3">
         <h5 class="mb-5">Your recent activity (last 60 days):</h5>
         <canvas id="myChart" width="400" height="400"></canvas>
@@ -46,33 +44,20 @@
 {% block js %}
 <script src="{{ url_for('static', filename='vendors/moment.js') }}"></script>
 <script src="{{ url_for('static', filename='vendors/Chart.min.js') }}"></script> 
-
 <script>
-    var data_from_db;   
-    {% if runs %}
-    data_from_db = [
-        {% for run in runs %} 
-        {t:'{{run.timestamp}}', y:{{run.distances|int/1000}}},
-        {% endfor %}
-    ];
-    {% endif %}
-    
     {% if runs %}
     from_db_runs = {
         'date':['0'{% for run in runs %},'{{run.timestamp}}'{% endfor %}],
         'distance':[0{% for run in runs %},{{run.distances|int/1000}}{% endfor %}]
     }
     {% endif %}
-    
     {% if injuries %}
     from_db_injuries = {
         'date':['0'{% for injury in injuries %},'{{injury.timestamp}}'{% endfor %}],
         'text':[''{% for injury in injuries %},'{{injury.text}}'{% endfor %}]
     }
     {% endif %}
-    
 </script>
-
 <script src="{{ url_for('static', filename='utils.js') }}"></script>  
 <script src="{{ url_for('static', filename='last_activity_chart.js') }}"></script>  
 {% endblock %}

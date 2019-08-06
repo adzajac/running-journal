@@ -24,3 +24,6 @@ label {
 .injury {
     background-color:#ffdddd;
 }
+.injury-form-textarea {
+    width:214px;
+}
