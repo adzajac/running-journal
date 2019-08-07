@@ -39,9 +39,10 @@ def user(username):
 def add_run():
     form = AddRunForm()
     if form.validate_on_submit():
-        duration = int(form.duration_h.data)*360 + int(form.duration_m.data)*60 + int(form.duration_s.data)
+        duration = int(form.duration_h.data)*3600 + int(form.duration_m.data)*60 + int(form.duration_s.data)
         timestamp = form.timestamp.data
-        run = Run(user_id=current_user.id, distances=int(form.distance.data), times=str(duration), timestamp=timestamp)
+        distances = '{:.0f}'.format(float(form.distance.data)*1000)
+        run = Run(user_id=current_user.id, distances=distances, times=str(duration), timestamp=timestamp)
         db.session.add(run)
         db.session.commit()
         flash("run added")
@@ -49,10 +50,28 @@ def add_run():
     return render_template('main/add_run.html', form=form)
 
 
-@blueprint.route('/edit_run/<run_id>')
+@blueprint.route('/edit_run/<run_id>', methods=['POST','GET'])
 @login_required
 def edit_run(run_id):
-    return 'editing run: ' + run_id
+    run = current_user.runs.filter_by(run_id=run_id).first_or_404()
+    form = AddRunForm()
+    if form.validate_on_submit():
+        run.distances = '{:.0f}'.format(float(form.distance.data)*1000)
+        run.times = str(int(form.duration_h.data)*3600 + int(form.duration_m.data)*60 + int(form.duration_s.data))
+        run.timestamp = form.timestamp.data
+        db.session.commit()
+        return redirect(url_for('main.runs'))
+    elif request.method == 'GET':
+        total_s = int(run.times)
+        h=total_s//3600
+        m=(total_s-h*3600)//60
+        s=total_s-h*3600-m*60
+        form.duration_h.data = '{:02.0f}'.format(h)
+        form.duration_m.data = '{:02.0f}'.format(m)
+        form.duration_s.data = '{:02.0f}'.format(s)
+        form.distance.data = str(int(run.distances)/1000)
+        form.timestamp.data = run.timestamp    
+    return render_template('main/edit_run.html', form=form)
 
 
 @blueprint.route('/delete_run/<run_id>')

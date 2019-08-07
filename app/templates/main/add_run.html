@@ -1,49 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <p>Add a Run</p>
-    <form acction="" method="post" class="login-form" novalidate>
-            {{ form.hidden_tag() }}
-            <p>
-                {{ form.distance.label }} <br> 
-                <input id="distance" name="distance" required type="text" value="" placeholder="0.00" size="14">
-            </p>
-            
-            {% for error in form.distance.errors %}
-            <div class="alert alert-danger form-alert">
-                {{ error }}
-            </div>
-            {% endfor %} 
-            <p>
-                {{ form.duration_h.label }} <br>
-                 
-                <input id="duration_h" name="duration_h" required type="text" value="00" size="2" maxlength="2">
-                :
-                <input id="duration_m" name="duration_m" required type="text" value="00" size="2" maxlength="2">
-                :
-                <input id="duration_s" name="duration_s" required type="text" value="00" size="2" maxlength="2">
-            </p>
-            {% for error in form.duration_h.errors %}
-            <div class="alert alert-danger form-alert">{{ error }}</div>
-            {% endfor %}
-            {% for error in form.duration_m.errors %}
-            <div class="alert alert-danger form-alert">{{ error }}</div>
-            {% endfor %}
-            {% for error in form.duration_s.errors %}
-            <div class="alert alert-danger form-alert">{{ error }}</div>
-            {% endfor %}
-            <p>
-                {{ form.timestamp.label }} <br>
-                <input id="timestamp" name="timestamp" type="text" value="" size="14"> 
-            </p>
-            {% for error in form.timestamp.errors %}
-            <div class="alert alert-danger form-alert">
-                {{ error }}
-            </div>
-            {% endfor %}
-            <p class="mt-5">
-                <input id="submit" name="submit" type="submit" value="Submit" class='btn btn-primary'>
-            </p>
-        </form>  
+    {% include 'main/_run_form.html' %}
 {% endblock %}
 
 {% block js %}

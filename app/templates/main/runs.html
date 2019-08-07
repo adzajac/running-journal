@@ -16,14 +16,15 @@
                 </tr>
               </thead>
               <tbody> 
-              {% for run in runs|sort(attribute='distances',reverse=False) %}  
-                {% set h=run.times|int//3600 %}
-                {% set m=run.times|int//60 %}
-                {% set s=run.times|int//60 %}
+              {% for run in runs %} 
+                {% set total=run.times|int %}  
+                {% set h=total//3600 %}
+                {% set m=(total-h*3600)//60 %}
+                {% set s=total-h*3600-m*60 %}
                 <tr>
                   <th scope="row">{{ run.timestamp|string|truncate(13, end='') }}</th>
                   <td>{{ run.distances|int/1000 }} km </td>
-                  <td>{{ h|abs }}h {{ m|abs }}m {{ s|abs }}s </td>
+                  <td>{{ h }}h {{ '{:02.0f}'.format(m) }}m {{ '{:02.0f}'.format(s) }}s </td>
                   <td><a href="{{ url_for('.edit_run', run_id=run.run_id) }}" class="btn btn-outline-info btn-sm">edit</a></td>
                   <td><a href="{{ url_for('.delete_run', run_id=run.run_id) }}" class="btn btn-outline-danger btn-sm">delete</a></td>
                 </tr>
