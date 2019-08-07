@@ -77,7 +77,10 @@ def edit_run(run_id):
 @blueprint.route('/delete_run/<run_id>')
 @login_required
 def delete_run(run_id):
-    return 'deleting run: ' + run_id
+    run = current_user.runs.filter_by(run_id=run_id).first_or_404()
+    db.session.delete(run)
+    db.session.commit()
+    return redirect(url_for('main.runs'))
 
 
 @blueprint.route('/runs')
