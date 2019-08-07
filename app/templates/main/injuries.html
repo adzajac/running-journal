@@ -5,14 +5,29 @@
         <div class="col mt-5">
         {% if injuries %}
         <h5 class="mb-4">Your injuries:</h5>
-            {% for injury in injuries %}  
-                <div class="injury">
-                {{ injury.text }} <br>
-                {{ injury.description }} <br> 
-                {{ injury.timestamp|string|truncate(13, end='') }} 
-                </div>
-            {% endfor %}
-        {% endif %}
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Description</th>
+                  <th scope="col"> </th>
+                  <th scope="col"> </th>
+                </tr>
+              </thead>
+              <tbody> 
+              {% for injury in injuries %}  
+                <tr>
+                  <th scope="row">{{ injury.timestamp|string|truncate(13, end='') }}</th>
+                  <td>{{ injury.text }} </td>
+                  <td>{{ injury.description }}</td>
+                  <td><a href="{{ url_for('.edit_injury', injury_id=injury.injury_id) }}" class="btn btn-outline-info btn-sm">edit</a></td>
+                  <td><a href="{{ url_for('.delete_injury', injury_id=injury.injury_id) }}" class="btn btn-outline-danger btn-sm">delete</a></td>
+                </tr>
+              {% endfor %}    
+              </tbody>
+            </table>
+        {% endif %}    
         </div>   
     </div>
 {% endblock %}
