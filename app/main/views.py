@@ -127,7 +127,10 @@ def edit_injury(injury_id):
 @blueprint.route('/delete_injury/<injury_id>')
 @login_required
 def delete_injury(injury_id):
-    return 'deleting injury: ' + injury_id
+    injury = current_user.injuries.filter_by(injury_id=injury_id).first_or_404()
+    db.session.delete(injury)
+    db.session.commit()
+    return redirect(url_for('main.injuries'))
 
 
 @blueprint.route('/injuries')
