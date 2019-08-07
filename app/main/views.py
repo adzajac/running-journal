@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import render_template, redirect, flash, url_for
+from flask import render_template, redirect, flash, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
 from app.main import blueprint
 from app.main.forms import AddRunForm, AddInjuryForm
@@ -87,10 +87,22 @@ def add_injury():
     return render_template('main/add_injury.html', form=form)
 
 
-@blueprint.route('/edit_injury/<injury_id>')
+@blueprint.route('/edit_injury/<injury_id>', methods=['POST','GET'])
 @login_required
 def edit_injury(injury_id):
-    return 'editing injury: ' + injury_id
+    injury = current_user.injuries.filter_by(injury_id=injury_id).first_or_404()
+    form = AddInjuryForm()
+    if form.validate_on_submit():
+        injury.text = form.title.data
+        injury.description = form.description.data
+        injury.timestamp = form.timestamp.data
+        db.session.commit()
+        return redirect(url_for('main.injuries'))
+    elif request.method == 'GET':
+        form.title.data = injury.text
+        form.description.data = injury.description
+        form.timestamp.data = injury.timestamp    
+    return render_template('main/edit_injury.html', form=form)
 
 
 @blueprint.route('/delete_injury/<injury_id>')

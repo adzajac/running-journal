@@ -2,7 +2,7 @@
     {{ form.hidden_tag() }}
     <p>
         {{ form.title.label }} <br> 
-        <input id="title" name="title" required type="text" value="">
+        <input id="title" name="title" required type="text" value="{% if form.title.data is not none %}{{ form.title.data }}{% endif %}">
     </p>
     {% for error in form.title.errors %}
     <div class="alert alert-danger form-alert">
@@ -11,11 +11,11 @@
     {% endfor %}
     <p>
         {{ form.description.label }} <br> 
-        <textarea class="form-control rounded-0 injury-form-textarea" id="description" name="description" rows="3"></textarea>
+        <textarea class="form-control rounded-0 injury-form-textarea" id="description" name="description" rows="3">{% if form.description.data is not none %}{{ form.description.data }}{% endif %}</textarea>
     </p>
     <p>
         {{ form.timestamp.label }} <br>
-        <input id="timestamp" name="timestamp" type="text" value="" size="14"> 
+        <input id="timestamp" name="timestamp" type="text" size="14" value="{% if form.timestamp.data is not none %}{{ form.timestamp.data.strftime('%d/%m/%Y') }}{% endif %}"> 
     </p>
     {% for error in form.timestamp.errors %}
     <div class="alert alert-danger form-alert">
