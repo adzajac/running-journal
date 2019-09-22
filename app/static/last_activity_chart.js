@@ -5,19 +5,23 @@ var now = moment();
 
 for(i=0; i<NUM_DAYS_DISPLAYED; i++) {
     var date = now.subtract(1,'d').format("YYYY-MM-DD");
-    index = from_db_runs.date.findIndex(x => x.slice(0,-9) === date);
-    if(index>=0) {
-        run_data.push({t:date, y:from_db_runs.distance[index]});
+    if (typeof from_db_runs !== 'undefined') {
+        index = from_db_runs.date.findIndex(x => x.slice(0,-9) === date);
+        if(index>=0) {
+            run_data.push({t:date, y:from_db_runs.distance[index]});
+        }
+        else {
+            run_data.push({t:date, y:null});
+        }
     }
-    else {
-        run_data.push({t:date, y:null});
-    }
-    index = from_db_injuries.date.findIndex(x => x.slice(0,-9) === date);
-    if(index>=0) {
-        injury_data.push({t:date, y:0});
-    }
-    else {
-        injury_data.push({t:date, y:null});
+    if (typeof from_db_injuries !== 'undefined') {
+        index = from_db_injuries.date.findIndex(x => x.slice(0,-9) === date);
+        if(index>=0) {
+            injury_data.push({t:date, y:0});
+        }
+        else {
+            injury_data.push({t:date, y:null});
+        }
     }
 }
 
