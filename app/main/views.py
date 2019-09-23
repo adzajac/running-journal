@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import render_template, redirect, flash, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
 from app.main import blueprint
-from app.main.forms import AddRunForm, AddInjuryForm
+from app.main.forms import AddRunForm, AddInjuryForm, EditUserForm
 from app.extensions import db, login
 from app.models import User, Run, Injury
 
@@ -22,10 +22,18 @@ def profile():
     return 'user profile page'
 
 
-@blueprint.route('/edit_profile')
+@blueprint.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    return 'edit user profile page'
+    form = EditUserForm()
+    if form.validate_on_submit():
+#        user = User(username=form.username.data, email=form.email.data)
+#        user.set_password(form.password.data)
+#        db.session.add(user)
+#        db.session.commit()
+        flash("profile updated")
+        return redirect(url_for('main.edit_profile'))
+    return render_template('main/edit_profile.html', form=form)
     
     
 @blueprint.route('/user/<username>')

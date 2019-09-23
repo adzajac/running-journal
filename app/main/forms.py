@@ -19,3 +19,10 @@ class AddInjuryForm(FlaskForm):
     timestamp = DateTimeField('Injury Date', format='%d/%m/%Y')
     submit = SubmitField('Submit')
     
+    
+class EditUserForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired(), Length(min=5)])
+    password_repeat = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password', message='Passwords must match')])
+    submit = SubmitField('Update')
