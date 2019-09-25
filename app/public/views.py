@@ -40,6 +40,14 @@ def logout():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is not None:
+            flash("registration error: username taken", "danger")
+            return redirect(url_for('public.register'))
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is not None:
+            flash("registration error: email already in use", "danger")
+            return redirect(url_for('public.register'))
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
