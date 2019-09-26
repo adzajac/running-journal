@@ -26,3 +26,10 @@ class EditUserForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), Length(min=5)])
 #    password_repeat = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password', message='Passwords must match')])
     submit = SubmitField('Update')
+    
+    
+class EditPasswordForm(FlaskForm):
+    old_password = PasswordField('Old password', validators=[DataRequired(), Length(min=5)])
+    new_password = PasswordField('New password', validators=[DataRequired(), Length(min=5)])
+    new_password_repeat = PasswordField('Repeat new password', validators=[DataRequired(), EqualTo('new_password', message='Passwords must match')])
+    submit = SubmitField('Update')

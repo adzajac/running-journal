@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
     <a href="{{ url_for('main.edit_profile') }}">edit profile</a><br>
-    <a href="#">change password</a>
+    <a href="{{ url_for('main.edit_password') }}">change password</a>
 {% endblock %}

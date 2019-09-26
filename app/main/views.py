@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import render_template, redirect, flash, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
 from app.main import blueprint
-from app.main.forms import AddRunForm, AddInjuryForm, EditUserForm
+from app.main.forms import AddRunForm, AddInjuryForm, EditUserForm, EditPasswordForm
 from app.extensions import db, login
 from app.models import User, Run, Injury
 
@@ -20,6 +20,20 @@ def index():
 @login_required
 def profile():
     return render_template('main/profile.html')
+
+
+@blueprint.route('/edit_password', methods=['GET', 'POST'])
+@login_required
+def edit_password():
+    form = EditPasswordForm()
+    if form.validate_on_submit():
+        if current_user.check_password(form.old_password.data):
+            current_user.set_password(form.new_password.data)
+            db.session.commit()
+            flash("password updated")
+        else:
+            flash("incorrect password", "danger")
+    return render_template('main/edit_password.html', form=form)
 
 
 @blueprint.route('/edit_profile', methods=['GET', 'POST'])
