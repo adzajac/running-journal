@@ -27,15 +27,18 @@ def profile():
 def edit_profile():
     form = EditUserForm()
     if form.validate_on_submit():
-        user = current_user
-        user.username = form.username.data
-        user.email = form.email.data
-        db.session.commit()
+        if current_user.check_password(form.password.data):
+            user = current_user
+            user.username = form.username.data
+            user.email = form.email.data
+            db.session.commit()
 #        user = User(username=form.username.data, email=form.email.data)
 #        user.set_password(form.password.data)
 #        db.session.add(user)
 #        db.session.commit()
-        flash("profile updated")
+            flash("profile updated")
+        else:
+            flash("incorrect password", "danger")
         return redirect(url_for('main.edit_profile'))
     elif request.method == 'GET':
         form.username.data = current_user.username
