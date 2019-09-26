@@ -27,12 +27,19 @@ def profile():
 def edit_profile():
     form = EditUserForm()
     if form.validate_on_submit():
+        user = current_user
+        user.username = form.username.data
+        user.email = form.email.data
+        db.session.commit()
 #        user = User(username=form.username.data, email=form.email.data)
 #        user.set_password(form.password.data)
 #        db.session.add(user)
 #        db.session.commit()
         flash("profile updated")
         return redirect(url_for('main.edit_profile'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
     return render_template('main/edit_profile.html', form=form)
     
     

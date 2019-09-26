@@ -30,15 +30,7 @@
                 {{ error }}
             </div>
             {% endfor %}
-            <p>
-                {{ form.password_repeat.label }}<br>
-                {{ form.password_repeat() }}
-            </p>
-            {% for error in form.password_repeat.errors %}
-            <div class="alert alert-danger form-alert">
-                {{ error }}
-            </div>
-            {% endfor %}
+            
             <p class="mt-5">
                 {{ form.submit() }}
             </p>
