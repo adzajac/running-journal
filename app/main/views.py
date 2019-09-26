@@ -19,7 +19,7 @@ def index():
 @blueprint.route('/profile')
 @login_required
 def profile():
-    return 'user profile page'
+    return render_template('main/profile.html')
 
 
 @blueprint.route('/edit_profile', methods=['GET', 'POST'])
