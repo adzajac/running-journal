@@ -43,14 +43,17 @@ def edit_profile():
     if form.validate_on_submit():
         if current_user.check_password(form.password.data):
             email_not_in_use = User.query.filter_by(email=form.email.data).first() is None
-            if email_not_in_use or form.email.data == current_user.email:
+            username_not_in_use = User.query.filter_by(username=form.username.data).first() is None 
+            email_is_correct = email_not_in_use or form.email.data == current_user.email
+            username_is_correct = username_not_in_use or form.username.data == current_user.username
+            if email_is_correct and username_is_correct:
                 user = current_user
                 user.username = form.username.data
                 user.email = form.email.data
                 db.session.commit()
                 flash("Your profile was updated.", "success")
             else:
-                flash("Error: This email is already in use!", "danger")
+                flash("Error: email or username already in use!", "danger")
         else:
             flash("incorrect password", "danger")
         return redirect(url_for('main.edit_profile'))
