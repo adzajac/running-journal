@@ -28,6 +28,10 @@ def login():
             if user.check_password(form.password.data):
                 login_user(user)
                 return redirect(url_for('public.index'))
+            else:
+                flash("wrong password", "danger")
+        else:
+            flash("uknown user", "danger")
     return render_template('public/login.html', form=form)
     
 @blueprint.route('/logout')
