@@ -1,10 +1,10 @@
 var NUM_DAYS_DISPLAYED = 60;
 var run_data = []
 var injury_data = []
-var now = moment();
 
-for(i=0; i<NUM_DAYS_DISPLAYED; i++) {
-    var date = now.subtract(1,'d').format("YYYY-MM-DD");
+
+for(i=0; i<NUM_DAYS_DISPLAYED; i++) { 
+    var date = moment().subtract(i,'d').format("YYYY-MM-DD");
     if (typeof from_db_runs !== 'undefined') {
         index = from_db_runs.date.findIndex(x => x.slice(0,-9) === date);
         if(index>=0) {
@@ -22,7 +22,7 @@ for(i=0; i<NUM_DAYS_DISPLAYED; i++) {
         else {
             injury_data.push({t:date, y:null});
         }
-    }
+    }  
 }
 
 var ctx = document.getElementById('myChart').getContext('2d');
