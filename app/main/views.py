@@ -69,6 +69,14 @@ def user(username):
     return 'view profile page of: ' + username
 
 
+@blueprint.route('/discover')
+@login_required
+def discover():
+    users = User.query.order_by(User.username.asc()).all()
+#    order_by(Run.timestamp.desc()).all()
+    return render_template('main/discover.html', users=users)
+
+
 @blueprint.route('/add_run', methods=['POST', 'GET'])
 @login_required
 def add_run():
