@@ -66,7 +66,8 @@ def edit_profile():
 @blueprint.route('/user/<username>')
 @login_required
 def user(username):
-    return 'view profile page of: ' + username
+    user = User.query.filter_by(username=username).first_or_404()
+    return render_template('main/user.html', user=user)
 
 
 @blueprint.route('/discover')
