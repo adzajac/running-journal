@@ -2,4 +2,7 @@
 {% block content %}
     <a href="{{ url_for('main.edit_profile') }}">edit profile</a><br>
     <a href="{{ url_for('main.edit_password') }}">change password</a>
+    {% for follower in follwoed %}
+        {{ follower.username }}
+    {% endfor %}
 {% endblock %}

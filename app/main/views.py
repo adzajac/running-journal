@@ -19,7 +19,9 @@ def index():
 @blueprint.route('/profile')
 @login_required
 def profile():
-    return render_template('main/profile.html')
+    followed = current_user.followed.all()
+    followers = current_user.followers.all()
+    return render_template('main/profile.html', followed=followed, followers=followers)
 
 
 @blueprint.route('/edit_password', methods=['GET', 'POST'])
