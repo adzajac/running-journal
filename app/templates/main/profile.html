@@ -1,8 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
+    <h4>Settings:</h4>
     <a href="{{ url_for('main.edit_profile') }}">edit profile</a><br>
-    <a href="{{ url_for('main.edit_password') }}">change password</a>
-    {% for follower in follwoed %}
-        {{ follower.username }}
-    {% endfor %}
+    <a href="{{ url_for('main.edit_password') }}">change password</a><br>
+    
+    {% if followed %}
+        <h4 class="mt-5">Following:</h4>
+        {% for user in followed %}
+            <p><a href="{{url_for('main.user', username=user.username)}}">{{ user.username }}</a></p>
+        {% endfor %}
+    {% endif %}
+
+    {% if followers %}
+        <h4 class="mt-5">Followers:</h4>
+        {% for user in followers %}
+            <p><a href="{{url_for('main.user', username=user.username)}}">{{ user.username }}</a></p>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
