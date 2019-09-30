@@ -19,8 +19,8 @@ def index():
 @blueprint.route('/profile')
 @login_required
 def profile():
-    followed = current_user.followed.all()
-    followers = current_user.followers.all()
+    followed = current_user.followed.filter().all()
+    followers = current_user.followers.filter().all()
     return render_template('main/profile.html', followed=followed, followers=followers)
 
 
@@ -78,6 +78,20 @@ def discover():
     users = User.query.order_by(User.username.asc()).all()
 #    order_by(Run.timestamp.desc()).all()
     return render_template('main/discover.html', users=users)
+
+
+@blueprint.route('/follow/<username>')
+@login_required
+def follow(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    if user != current_user:
+        current_user.follow(user)
+        db.session.commit()
+        flash(username + ' followed')
+    else:
+        flash("can't follow myself")
+    return redirect(url_for('main.user', username=username))
+
 
 
 @blueprint.route('/add_run', methods=['POST', 'GET'])
